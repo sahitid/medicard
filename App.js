@@ -10,7 +10,7 @@ import Dashboard from "./Screens/Dashboard";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_APP } from "./FirebaseConfig";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,13 +26,13 @@ function InsideLayout() {
 }
 
 export default function App() {
+  const [user, setUser] = useState(null);
   const auth = getAuth();
-  const user = auth.curre;
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log("user", user);
-      user = user;
+      setUser(user);
     });
   });
   return (

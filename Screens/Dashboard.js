@@ -12,6 +12,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { getAuth } from "firebase/auth";
 
 const Dashboard = () => {
   const navigation = useNavigation();
@@ -39,12 +40,15 @@ const Dashboard = () => {
       setModalVisible(true);
     }
   };
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const displayName = user.email;
 
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.greeting}>Hi, USER!</Text>
+        <Text style={styles.greeting}>Hi, {displayName}!</Text>
         <Image
           source={{ uri: "https://path/to/profile/pic.png" }} // Firebase integration needed for profile pic and name
           style={styles.profilePic}
