@@ -16,7 +16,7 @@ import { getAuth } from "firebase/auth";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Dashboard = ({ navigation }) => {
+const Dashboard = ({ navigation, user }) => {
   //const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);

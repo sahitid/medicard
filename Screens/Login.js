@@ -24,8 +24,8 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
-      alert("Logged In");
+      if (response.user != null) {
+      }
     } catch (error) {
       console.log(error);
       alert("Sign in failed: ");

@@ -8,7 +8,7 @@ const Home = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.title}>MediCard</Text>
       <Text style={styles.subtitle}>Your Lifeline. Always Within Reach.</Text>
-      <Image source={require("../assets/icon.png")} style={styles.image} />
+      <Image source={require("../assets/medicine.png")} style={styles.image} />
       <Button
         title="Go to Dashboard"
         onPress={() => navigation.navigate(Dashboard)}
