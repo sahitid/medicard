@@ -11,7 +11,7 @@ const Home = ({ navigation }) => {
       <Image source={require("../assets/medicine.png")} style={styles.image} />
       <Button
         title="Go to Dashboard"
-        onPress={() => navigation.navigate(Dashboard)}
+        onPress={() => navigation.navigate("Dashboard")}
       />
       <Button
         title="Go to Login"
