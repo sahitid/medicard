@@ -37,7 +37,29 @@ export default function App() {
   });
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{ headerShown: true }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+    /*
+    //COMMENTED OUT FOR LATER USE DONT DELETE YET
+    //------------------------//
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
         {user ? (
           <Stack.Screen
             name="Dashboard"
@@ -51,15 +73,14 @@ export default function App() {
             options={{ headerShown: true }}
           />
         )}
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: true }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
-    /*<View className="flex-1 justify-center items-center bg-gray-300">
-      <Text className="text-5xl">MEDICARD</Text>
-      <Pressable onPress={() => alert("YOU PRESSED BUTTON")}>
-        <Text>COOL button</Text>
-      </Pressable>
-      <StatusBar style="auto" />
-    </View>
+    //----------------------//
     */
   );
 }
