@@ -18,14 +18,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
   const auth = FIREBASE_AUTH;
 
   const signIn = async () => {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      if (response.user != null) {
-      }
+      setUser(response.user);
     } catch (error) {
       console.log(error);
       alert("Sign in failed: ");
@@ -43,10 +43,10 @@ const Login = () => {
         password
       );
       console.log(response);
-      alert("Check your Email");
+      alert("Account Created!");
     } catch (error) {
       console.log(error);
-      alert("Sign in failed: ");
+      alert("Cannot create an account!");
     } finally {
       setLoading(false);
     }
