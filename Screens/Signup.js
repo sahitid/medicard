@@ -6,68 +6,66 @@ import {
   StyleSheet,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../FirebaseConfig";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, collection } from "firebase/firestore";
 
-const Login = ({ navigation }) => {
+//TODO => Remove navigation? Not sure if its needed?
+const Signup = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
 
-  const signIn = async () => {
+  const createAccount = async () => {
     setLoading(true);
+
     try {
-      //Signs in then navigates to dashboard
-      const response = await signInWithEmailAndPassword(
-        FIREBASE_AUTH,
+      //Creates an account with just email (Will allow OAuth later)
+      //TODO => Add OAuth
+      const response = await createUserWithEmailAndPassword(
+        auth,
         email,
         password
       );
+
+      //Write to DOC when account is created
+      writeData(response.user, response.user.uid);
+
+      alert("Account Created!");
       navigation.navigate("Dashboard");
     } catch (error) {
-      //Checks why user cant log in
-      if (error.code === "auth/wrong-password") {
-        alert("Incorrect Password");
-      } else if (error.code === "auth/user-not-found") {
-        alert("No user found with this email");
+      //Checks for why email isn't working
+      console.log(error.code);
+      // Specific checks (change to Switch)
+      if (error.code === "auth/email-already-in-use") {
+        alert("This email is already in use");
       } else {
-        console.log("Error signing in:", error.message);
+        //Any other reason
+        alert("Cannot create an account! Check Error");
       }
     } finally {
       setLoading(false);
     }
   };
 
-  // TODO => Maybe remove function and put back in button but that made code run twice
-  const signUp = async () => {
-    navigation.navigate("Signup");
-  };
-
-  // TODO => SHOULD BE REMOVED AS SIGNUP PAGE EXIST
-  /*const signUp = async () => {
-    setLoading(true);
+  async function writeData(user, id) {
     try {
-      const response = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log(response);
-      alert("Account Created!");
-    } catch (error) {
-      console.log(error);
-      alert("Cannot create an account!");
-    } finally {
-      setLoading(false);
+      //Simple User Data most will be undefined if not using oAuth
+      const docRef = await setDoc(doc(FIREBASE_DB, "users", id), {
+        email: user.email,
+        displayName: user.displayName,
+        phone: user.phoneNumber,
+        photo: user.photoURL,
+      });
+      console.log("Document written with ID ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
-  };
-  */
+  }
 
   return (
     <View style={styles.container}>
@@ -91,18 +89,21 @@ const Login = ({ navigation }) => {
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <>
-            <Button onPress={signIn} title="Login" />
-            <Button onPress={signUp} title="Create Account" />
+            <Button
+              style={styles.button}
+              onPress={createAccount}
+              title="Create Account"
+            />
           </>
         )}
       </KeyboardAvoidingView>
     </View>
   );
 };
-//};
 
-export default Login;
+export default Signup;
 
+//Styles for the components
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   button: {
-    color: "red",
+    color: "fff",
     height: 30,
     backgroundColor: "blue",
   },

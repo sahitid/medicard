@@ -1,7 +1,8 @@
 // Home.js
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, Button } from "react-native";
 import Dashboard from "./Dashboard";
+import { getAuth } from "firebase/auth";
 
 const Home = ({ navigation }) => {
   return (
@@ -9,10 +10,6 @@ const Home = ({ navigation }) => {
       <Text style={styles.title}>MediCard</Text>
       <Text style={styles.subtitle}>Your Lifeline. Always Within Reach.</Text>
       <Image source={require("../assets/medicine.png")} style={styles.image} />
-      <Button
-        title="Go to Dashboard"
-        onPress={() => navigation.navigate("Dashboard")}
-      />
       <Button
         title="Go to Login"
         onPress={() => navigation.navigate("Login")}

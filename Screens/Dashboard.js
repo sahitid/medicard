@@ -15,10 +15,17 @@ import { useNavigation } from "@react-navigation/native";
 import { getAuth } from "firebase/auth";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { FIREBASE_AUTH } from "../FirebaseConfig";
 
 const Dashboard = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const user = FIREBASE_AUTH.currentUser;
+  let name = user.displayName;
+
+  if (user.displayName === null) {
+    name = user.email;
+  }
 
   const features = [
     { id: "1", name: "Emergency ID", color: "#FEEAEA" },
@@ -41,18 +48,16 @@ const Dashboard = ({ navigation }) => {
       setModalVisible(true);
     }
   };
-  const auth = getAuth();
-  const user = auth.currentUser;
-  const displayName = "User";
-  if (user != null) {
-    displayName = user.displayName;
-  }
+
+  //NEED TO CHECK WHY THIS ISNT WORKING
+
+  //----------
 
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.greeting}>Hi, {displayName}!</Text>
+        <Text style={styles.greeting}>Hi, {name}!</Text>
         <Image
           source={{ uri: "https://path/to/profile/pic.png" }} // Firebase integration needed for profile pic and name
           style={styles.profilePic}
@@ -115,6 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 20,
+    marginTop: 55,
   },
   greeting: {
     fontSize: 24,

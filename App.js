@@ -11,11 +11,13 @@ import Dashboard from "./Screens/Dashboard";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_APP } from "./FirebaseConfig";
 import { useEffect, useState } from "react";
+import Signup from "./Screens/Signup";
 
 const Stack = createNativeStackNavigator();
 
 const InsideStack = createNativeStackNavigator();
 
+// TODO => Delete
 function InsideLayout() {
   return (
     <InsideStack.Navigator>
@@ -24,17 +26,20 @@ function InsideLayout() {
     </InsideStack.Navigator>
   );
 }
+//--------------
 
 export default function App() {
   const [user, setUser] = useState(null);
   const auth = getAuth();
 
+  //Not sure why use effect is needed will check
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("user", user);
       setUser(user);
     });
   });
+
+  //TODO => Should find a way to remove headers and allow design to work
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -51,10 +56,16 @@ export default function App() {
         <Stack.Screen
           name="Dashboard"
           component={Dashboard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
           options={{ headerShown: true }}
         />
       </Stack.Navigator>
     </NavigationContainer>
+
     /*
     //COMMENTED OUT FOR LATER USE DONT DELETE YET
     //------------------------//
