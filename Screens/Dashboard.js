@@ -10,6 +10,7 @@ import {
   Modal,
   Button,
   ScrollView,
+  Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getAuth } from "firebase/auth";
@@ -49,6 +50,10 @@ const Dashboard = ({ navigation }) => {
     }
   };
 
+  const handleLogoutPress = () => {
+    navigation.navigate("Logout");
+  };
+
   //NEED TO CHECK WHY THIS ISNT WORKING
 
   //----------
@@ -57,7 +62,9 @@ const Dashboard = ({ navigation }) => {
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.greeting}>Hi, {name}!</Text>
+        <Pressable onPress={handleLogoutPress}>
+          <Text style={styles.greeting}>Hi, {name}!</Text>
+        </Pressable>
         <Image
           source={{ uri: "https://path/to/profile/pic.png" }} // Firebase integration needed for profile pic and name
           style={styles.profilePic}
