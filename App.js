@@ -12,6 +12,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_APP } from "./FirebaseConfig";
 import { useEffect, useState } from "react";
 import Signup from "./Screens/Signup";
+import Logout from "./Screens/Logout";
 
 const Stack = createNativeStackNavigator();
 
@@ -63,35 +64,12 @@ export default function App() {
           component={Signup}
           options={{ headerShown: true }}
         />
-      </Stack.Navigator>
-    </NavigationContainer>
-
-    /*
-    //COMMENTED OUT FOR LATER USE DONT DELETE YET
-    //------------------------//
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        {user ? (
-          <Stack.Screen
-            name="Dashboard"
-            component={Dashboard}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ headerShown: true }}
-          />
-        )}
         <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: true }}
+          name="Logout"
+          component={Logout}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
-    //----------------------//
-    */
   );
 }
