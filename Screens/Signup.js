@@ -75,9 +75,7 @@ const Signup = ({ navigation }) => {
         photo: user.photoURL,
       });
       console.log("Document written with ID ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
+    } catch (e) {}
   }
 
   return (
@@ -105,17 +103,6 @@ const Signup = ({ navigation }) => {
           autoCapitalize="none"
           onChangeText={(text) => setPassword(text)}
         ></TextInput>
-        {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : (
-          <>
-            <Button
-              style={styles.button}
-              onPress={createAccount}
-              title="Create Account"
-            />
-          </>
-        )}
       </KeyboardAvoidingView>
     </View>
   );

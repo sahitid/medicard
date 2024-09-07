@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   KeyboardAvoidingView,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
@@ -14,6 +15,14 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import {
+  useFonts,
+  SpaceGrotesk_300Light,
+  SpaceGrotesk_400Regular,
+  SpaceGrotesk_500Medium,
+  SpaceGrotesk_600SemiBold,
+  SpaceGrotesk_700Bold,
+} from "@expo-google-fonts/space-grotesk";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -72,6 +81,7 @@ const Login = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView behavior="padding">
+        <Text style={styles.title}>Login</Text>
         <TextInput
           style={styles.email}
           value={email}
@@ -83,16 +93,22 @@ const Login = ({ navigation }) => {
           style={styles.password}
           secureTextEntry={true}
           value={password}
-          placeholder="password"
+          placeholder="Password"
           autoCapitalize="none"
           onChangeText={(text) => setPassword(text)}
         ></TextInput>
+
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <>
-            <Button onPress={signIn} title="Login" />
-            <Button onPress={signUp} title="Create Account" />
+            <Pressable style={styles.signinButton}>
+              <Text style={styles.signinText} onPress={signIn}>
+                Login
+              </Text>
+            </Pressable>
+            <Text style={styles.forgotText}>Forgot Password?</Text>
+            <Text style={styles.signUp}>Don't have an account? Sign Up </Text>
           </>
         )}
       </KeyboardAvoidingView>
@@ -105,29 +121,66 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
+    marginVertical: 80,
     marginHorizontal: 20,
     flex: 1,
     justifyContent: "top",
   },
+  title: {
+    marginTop: 30,
+    fontSize: "40px",
+    textAlign: "center",
+    fontFamily: "SpaceGrotesk_300Light",
+  },
   email: {
+    marginTop: 40,
+    marginBottom: 20,
     marginVertical: 4,
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 4,
+    height: 60,
+    borderWidth: 0,
+    borderRadius: 36,
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#EEECEC",
   },
   password: {
     marginVertical: 4,
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 4,
+    height: 60,
+    borderWidth: 0,
+    borderRadius: 36,
+    border: "none",
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#EEECEC",
+    marginBottom: 40,
   },
   button: {
     color: "red",
     height: 30,
     backgroundColor: "blue",
+  },
+  signinButton: {
+    marginVertical: 4,
+    height: 60,
+    borderWidth: 0,
+    borderRadius: 36,
+    border: "none",
+    padding: 10,
+    backgroundColor: "#F88976",
+    marginBottom: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  signinText: {
+    fontSize: 20,
+    color: "#fff",
+  },
+  forgotText: {
+    color: "#F88976",
+    textAlign: "center",
+    fontSize: 18,
+  },
+  signUp: {
+    marginTop: 30,
+    color: "#BDBCBC",
+    textAlign: "center",
   },
 });
