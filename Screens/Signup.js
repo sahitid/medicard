@@ -10,13 +10,18 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../FirebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from "firebase/auth";
 import { doc, setDoc, collection } from "firebase/firestore";
 
 //TODO => Remove navigation? Not sure if its needed?
 const Signup = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
 
@@ -31,12 +36,19 @@ const Signup = ({ navigation }) => {
         email,
         password
       );
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      })
+        .then(() => {
+          //Write to DOC when account is created
+          writeData(response.user, response.user.uid);
 
-      //Write to DOC when account is created
-      writeData(response.user, response.user.uid);
-
-      alert("Account Created!");
-      navigation.navigate("Dashboard");
+          alert("Account Created!");
+          navigation.navigate("Dashboard");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (error) {
       //Checks for why email isn't working
       console.log(error.code);
@@ -46,6 +58,7 @@ const Signup = ({ navigation }) => {
       } else {
         //Any other reason
         alert("Cannot create an account! Check Error");
+        console.log(error);
       }
     } finally {
       setLoading(false);
@@ -70,6 +83,13 @@ const Signup = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView behavior="padding">
+        <TextInput
+          style={styles.email}
+          value={name}
+          placeholder="Display Name"
+          autoCapitalize="none"
+          onChangeText={(text) => setName(text)}
+        ></TextInput>
         <TextInput
           style={styles.email}
           value={email}
