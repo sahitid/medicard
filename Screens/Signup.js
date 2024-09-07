@@ -41,7 +41,7 @@ const Signup = ({ navigation }) => {
       })
         .then(() => {
           //Write to DOC when account is created
-          writeData(response.user, response.user.uid);
+          writeData(response.user);
 
           alert("Account Created!");
           navigation.navigate("Dashboard");
@@ -65,10 +65,10 @@ const Signup = ({ navigation }) => {
     }
   };
 
-  async function writeData(user, id) {
+  async function writeData(user) {
     try {
       //Simple User Data most will be undefined if not using oAuth
-      const docRef = await setDoc(doc(FIREBASE_DB, "users", id), {
+      const docRef = await setDoc(doc(FIREBASE_DB, "users", user.uid), {
         email: user.email,
         displayName: user.displayName,
         phone: user.phoneNumber,
