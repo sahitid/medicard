@@ -75,12 +75,15 @@ const Signup = ({ navigation }) => {
         photo: user.photoURL,
       });
       console.log("Document written with ID ", docRef.id);
-    } catch (e) {}
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   }
 
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView behavior="padding">
+        <Text style={styles.title}>Sign Up</Text>
         <TextInput
           style={styles.email}
           value={name}
@@ -99,10 +102,23 @@ const Signup = ({ navigation }) => {
           style={styles.password}
           secureTextEntry={true}
           value={password}
-          placeholder="password"
+          placeholder="Password"
           autoCapitalize="none"
           onChangeText={(text) => setPassword(text)}
         ></TextInput>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <>
+            <Pressable style={styles.signinButton}>
+              <Text style={styles.signinText} onPress={createAccount}>
+                Sign Up
+              </Text>
+            </Pressable>
+
+            <Text style={styles.logIn}>Already have an account? Login</Text>
+          </>
+        )}
       </KeyboardAvoidingView>
     </View>
   );
@@ -117,25 +133,56 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "top",
   },
+  title: {
+    marginTop: 90,
+    marginBottom: 30,
+    fontSize: "40px",
+    textAlign: "center",
+  },
   email: {
+    marginVertical: 50,
+    marginBottom: 20,
     marginVertical: 4,
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 4,
+    height: 60,
+    borderWidth: 0,
+    borderRadius: 36,
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#EEECEC",
   },
   password: {
     marginVertical: 4,
-    height: 50,
-    borderWidth: 1,
-    borderRadius: 4,
+    height: 60,
+    borderWidth: 0,
+    borderRadius: 36,
+    border: "none",
     padding: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#EEECEC",
+    marginBottom: 40,
   },
   button: {
     color: "fff",
     height: 30,
     backgroundColor: "blue",
+  },
+  signinButton: {
+    marginVertical: 4,
+    height: 60,
+    borderWidth: 0,
+    borderRadius: 36,
+    border: "none",
+    padding: 10,
+    backgroundColor: "#F88976",
+    marginBottom: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  signinText: {
+    fontSize: 20,
+    color: "#fff",
+  },
+  logIn: {
+    marginTop: 30,
+    color: "#BDBCBC",
+    textAlign: "center",
   },
 });
