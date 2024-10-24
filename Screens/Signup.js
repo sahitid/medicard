@@ -43,8 +43,7 @@ const Signup = ({ navigation }) => {
           //Write to DOC when account is created
           writeData(response.user);
 
-          alert("Account Created!");
-          navigation.navigate("Dashboard");
+          navigation.navigate("Additional");
         })
         .catch((error) => {
           console.log(error);
@@ -74,7 +73,7 @@ const Signup = ({ navigation }) => {
         phone: user.phoneNumber,
         photo: user.photoURL,
       });
-      console.log("Document written with ID ", docRef.id);
+      console.log("Document written with ID ");
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -116,7 +115,9 @@ const Signup = ({ navigation }) => {
               </Text>
             </Pressable>
 
-            <Text style={styles.logIn}>Already have an account? Login</Text>
+            <Text style={styles.logIn}>
+              Already have an account? <Text>Login</Text>
+            </Text>
           </>
         )}
       </KeyboardAvoidingView>

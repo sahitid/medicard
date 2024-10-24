@@ -11,6 +11,9 @@ const Home = ({ navigation }) => {
   function signup() {
     navigation.navigate("Signup");
   }
+  function additional() {
+    navigation.navigate("Additional");
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>MediCard</Text>

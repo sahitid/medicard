@@ -43,7 +43,7 @@ const Dashboard = ({ navigation }) => {
 
   const handleCardPress = (item) => {
     if (item.name === "Emergency ID") {
-      navigation.navigate("EmergencyID");
+      navigation.navigate("Profile");
     } else {
       setSelectedItem(item);
       setModalVisible(true);

@@ -28,6 +28,7 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [wrong, setWrong] = useState(false);
 
   const signIn = async () => {
     setLoading(true);
@@ -97,7 +98,7 @@ const Login = ({ navigation }) => {
           autoCapitalize="none"
           onChangeText={(text) => setPassword(text)}
         ></TextInput>
-
+        {}
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (

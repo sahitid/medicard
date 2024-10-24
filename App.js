@@ -2,7 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import NavigationContainer from "./node_modules/@react-navigation/native/lib/module/NavigationContainer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "./Screens/Login";
 import Home from "./Screens/Home";
 import List from "./Screens/List";
 import Details from "./Screens/Details";
@@ -11,22 +10,17 @@ import Dashboard from "./Screens/Dashboard";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_APP } from "./FirebaseConfig";
 import { useEffect, useState } from "react";
+
+import Login from "./Screens/Login";
 import Signup from "./Screens/Signup";
 import Logout from "./Screens/Logout";
+import Profile from "./Screens/Profile";
+import Additional from "./Screens/Additional";
 
 const Stack = createNativeStackNavigator();
 
 const InsideStack = createNativeStackNavigator();
 
-// TODO => Delete
-function InsideLayout() {
-  return (
-    <InsideStack.Navigator>
-      <InsideStack.Screen name="My todos" component={List} />
-      <InsideStack.Screen name="Details" component={Details} />
-    </InsideStack.Navigator>
-  );
-}
 //--------------
 
 export default function App() {
@@ -67,6 +61,16 @@ export default function App() {
         <Stack.Screen
           name="Logout"
           component={Logout}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Additional"
+          component={Additional}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
